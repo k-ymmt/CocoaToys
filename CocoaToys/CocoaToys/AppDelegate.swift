@@ -37,6 +37,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         self.window = window
 
         NSApp.activate(ignoringOtherApps: true)
+        NSApp.setActivationPolicy(.regular)
     }
 
     func applicationWillTerminate(_ notification: Notification) {
