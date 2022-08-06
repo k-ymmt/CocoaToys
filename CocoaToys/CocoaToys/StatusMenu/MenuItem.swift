@@ -42,18 +42,3 @@ final class MenuItem: NSMenuItem {
         print("deinit MenuItem")
     }
 }
-
-protocol NSMenuItemConvertible {
-    func menuItem() -> NSMenuItem
-}
-
-extension NSMenuItem {
-    struct Separator: NSMenuItemConvertible {
-        init() {
-        }
-
-        func menuItem() -> NSMenuItem {
-            .separator()
-        }
-    }
-}

@@ -10,6 +10,7 @@
 		11DE863A289E106100AC9FEF /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DE8639289E106100AC9FEF /* MenuItem.swift */; };
 		11DE863E289E1BDE00AC9FEF /* CocoaToysStatusBarMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DE863D289E1BDE00AC9FEF /* CocoaToysStatusBarMenu.swift */; };
 		11DE8640289E327E00AC9FEF /* NSMenu+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DE863F289E327E00AC9FEF /* NSMenu+Extensions.swift */; };
+		11DE8642289E359700AC9FEF /* NSMenuItemConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DE8641289E359700AC9FEF /* NSMenuItemConvertible.swift */; };
 		11EE763C28950F8600929423 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EE763B28950F8600929423 /* SideBarView.swift */; };
 		11EE76432895230900929423 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EE76422895230900929423 /* AppEnvironment.swift */; };
 		11EE76462895264900929423 /* CocoaToyesEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EE76452895264900929423 /* CocoaToyesEnvironment.swift */; };
@@ -40,6 +41,7 @@
 		11DE8639289E106100AC9FEF /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 		11DE863D289E1BDE00AC9FEF /* CocoaToysStatusBarMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaToysStatusBarMenu.swift; sourceTree = "<group>"; };
 		11DE863F289E327E00AC9FEF /* NSMenu+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMenu+Extensions.swift"; sourceTree = "<group>"; };
+		11DE8641289E359700AC9FEF /* NSMenuItemConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSMenuItemConvertible.swift; sourceTree = "<group>"; };
 		11EE763B28950F8600929423 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
 		11EE76422895230900929423 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		11EE76452895264900929423 /* CocoaToyesEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaToyesEnvironment.swift; sourceTree = "<group>"; };
@@ -72,6 +74,7 @@
 				11DE8639289E106100AC9FEF /* MenuItem.swift */,
 				11DE863D289E1BDE00AC9FEF /* CocoaToysStatusBarMenu.swift */,
 				11DE863F289E327E00AC9FEF /* NSMenu+Extensions.swift */,
+				11DE8641289E359700AC9FEF /* NSMenuItemConvertible.swift */,
 			);
 			path = StatusMenu;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				11DE863A289E106100AC9FEF /* MenuItem.swift in Sources */,
 				11DE863E289E1BDE00AC9FEF /* CocoaToysStatusBarMenu.swift in Sources */,
 				11EE763C28950F8600929423 /* SideBarView.swift in Sources */,
+				11DE8642289E359700AC9FEF /* NSMenuItemConvertible.swift in Sources */,
 				11FFC5C12892BD79009F2511 /* AppDelegate.swift in Sources */,
 				11EE764A28952CB700929423 /* MainContentType.swift in Sources */,
 				11FFC5D0289348FD009F2511 /* MainView.swift in Sources */,
