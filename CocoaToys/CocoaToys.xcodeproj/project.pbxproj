@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11DE8640289E327E00AC9FEF /* NSMenu+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DE863F289E327E00AC9FEF /* NSMenu+Extensions.swift */; };
 		11EE763C28950F8600929423 /* SideBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EE763B28950F8600929423 /* SideBarView.swift */; };
 		11EE76432895230900929423 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EE76422895230900929423 /* AppEnvironment.swift */; };
 		11EE76462895264900929423 /* CocoaToyesEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EE76452895264900929423 /* CocoaToyesEnvironment.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		11DE863F289E327E00AC9FEF /* NSMenu+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMenu+Extensions.swift"; sourceTree = "<group>"; };
 		11EE763B28950F8600929423 /* SideBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarView.swift; sourceTree = "<group>"; };
 		11EE76422895230900929423 /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		11EE76452895264900929423 /* CocoaToyesEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocoaToyesEnvironment.swift; sourceTree = "<group>"; };
@@ -60,6 +62,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11DE8638289E0CA700AC9FEF /* StatusMenu */ = {
+			isa = PBXGroup;
+			children = (
+				11DE863F289E327E00AC9FEF /* NSMenu+Extensions.swift */,
+			);
+			path = StatusMenu;
+			sourceTree = "<group>";
+		};
 		11EE76442895263700929423 /* Environments */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +107,7 @@
 		11FFC5BF2892BD79009F2511 /* CocoaToys */ = {
 			isa = PBXGroup;
 			children = (
+				11DE8638289E0CA700AC9FEF /* StatusMenu */,
 				11EE76442895263700929423 /* Environments */,
 				11FFC5C02892BD79009F2511 /* AppDelegate.swift */,
 				11EE766C2895500700929423 /* Info.plist */,
@@ -186,6 +197,7 @@
 			files = (
 				11EE76432895230900929423 /* AppEnvironment.swift in Sources */,
 				11EE76462895264900929423 /* CocoaToyesEnvironment.swift in Sources */,
+				11DE8640289E327E00AC9FEF /* NSMenu+Extensions.swift in Sources */,
 				11EE763C28950F8600929423 /* SideBarView.swift in Sources */,
 				11FFC5C12892BD79009F2511 /* AppDelegate.swift in Sources */,
 				11EE764A28952CB700929423 /* MainContentType.swift in Sources */,
