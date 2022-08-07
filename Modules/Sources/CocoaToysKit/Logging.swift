@@ -38,3 +38,6 @@ public extension Logging {
         log(.error, message: "\(error)", file: file, function: function, line: line)
     }
 }
+
+extension Loggings.LogLevel: Comparable {
+}

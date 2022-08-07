@@ -11,6 +11,10 @@ import Dependencies
 import Caffeinator
 
 final class CocoaToysEnvironment: AppEnvironment {
+    var logLevel: Loggings.LogLevel {
+        .debug
+    }
+
     var fileManager: FileManager {
         .default
     }
@@ -19,5 +23,5 @@ final class CocoaToysEnvironment: AppEnvironment {
 
     lazy var caffeinatorService: CaffeinatorServiceType = CaffeinatorService(manager: configManager, fileManager: fileManager, logger: caffeinatorLogger)
 
-    lazy var caffeinatorLogger: Logging = Logger(category: "Caffeinator")
+    lazy var caffeinatorLogger: Logging = Logger(category: "Caffeinator", logLevel: logLevel)
 }

@@ -11,13 +11,18 @@ import os
 
 public final class Logger: Logging {
     private let logger: os.Logger
+    private let logLevel: Loggings.LogLevel
 
-    public init(category: String) {
+    public init(category: String, logLevel: Loggings.LogLevel) {
         self.logger = .init(subsystem: "app.kymmt.CocoaToys", category: category)
+        self.logLevel = logLevel
     }
 
 
     public func log(_ logLevel: Loggings.LogLevel, message: @escaping @autoclosure () -> String, file: String, function: String, line: Int) {
+        guard self.logLevel <= logLevel else {
+            return
+        }
         switch logLevel {
         case .debug:
             logger.debug("\(message())")
