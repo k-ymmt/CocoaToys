@@ -17,6 +17,7 @@ public enum ConfigManagerError: Error {
 public protocol ConfigManager {
     func fileChanged<Config: ConfigType>(_ configType: Config.Type) -> AnyPublisher<Result<Config, ConfigManagerError>, Never>
     func save(config: some ConfigType) async throws
+    func update<Config: ConfigType>( action: @escaping (inout Config) -> Void) async throws
     func createIfNotExists<Config: ConfigType>(defaultConfig: @autoclosure  () -> Config) async throws
-    func isExists(config: ConfigType.Type) -> Bool
+    func isExists<Config: ConfigType>(config: Config.Type) -> Bool
 }

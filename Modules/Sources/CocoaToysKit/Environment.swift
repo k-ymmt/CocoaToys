@@ -24,15 +24,22 @@ public final class MockEnvironment: Environment {
                 Just(.success(config as! Config)).eraseToAnyPublisher()
             }
 
-            func createIfNotExists<Config>(defaultConfig: @autoclosure () -> Config) async throws where Config : ConfigType {
+            func createIfNotExists<Properties>(defaultConfig: @autoclosure () -> Properties) async throws where Properties : ConfigType {
             }
 
-            func isExists(config: ConfigType.Type) -> Bool {
+            func isExists<Config: ConfigType>(config: Config.Type) -> Bool {
                 true
             }
 
             func save(config: some ConfigType) async throws {
                 self.config = config
+            }
+
+            func update<Config: ConfigType>(action: @escaping (inout Config) -> Void) async throws {
+                if var config = config as? Config {
+                    action(&config)
+                    self.config = config
+                }
             }
         }
 

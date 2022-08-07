@@ -8,14 +8,22 @@
 import Foundation
 import Cocoa
 import SwiftUI
+import Caffeinator
 
 final class CocoaToysStatusBarMenu: NSMenu {
+    private let environment: AppEnvironment
     private var preferecesWindow: NSWindowController?
 
-    init() {
+    init(environment: AppEnvironment) {
+        self.environment = environment
         super.init(title: "CocoaToys")
 
         self.addItems {
+            MenuItem("Caffeinator")
+            CaffeinatorStatusMenuItem(environment: environment)
+
+            NSMenuItem.Separator()
+
             MenuItem("Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "unknown")")
             MenuItem("Preferences...") { [weak self] in
                 self?.openPreferences()
@@ -55,7 +63,7 @@ private extension CocoaToysStatusBarMenu {
                 backing: .buffered,
                 defer: false
             )
-            window.contentView = NSHostingView(rootView: MainView(environment: CocoaToysEnvironment()))
+            window.contentView = NSHostingView(rootView: MainView(environment: environment))
             window.title = "CocoaToys"
             window.minSize = .init(width: 500, height: 350)
             window.delegate = self
@@ -69,5 +77,10 @@ private extension CocoaToysStatusBarMenu {
 
     func terminate() {
         NSApp.terminate(self)
+    }
+
+    func openAbout() {
+        NSApp.activate(ignoringOtherApps: true)
+        NSApp.orderFrontStandardAboutPanel(self)
     }
 }

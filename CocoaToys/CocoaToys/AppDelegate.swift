@@ -18,7 +18,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApplication.shared.disableRelaunchOnLogin()
 
         let statusMenuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-        statusMenuItem.menu = CocoaToysStatusBarMenu()
+        statusMenuItem.menu = CocoaToysStatusBarMenu(environment: CocoaToysEnvironment())
         statusMenuItem.button?.image = NSImage(named: "status_menu")
         statusMenuItem.behavior = .removalAllowed
         self.statusMenuItem = statusMenuItem
