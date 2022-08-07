@@ -46,6 +46,7 @@ public struct CaffeinatorView: View {
                                 .frame(height: 30)
                         }
                     }
+                    .disabled(!viewModel.caffeinatorEnabled)
                     .pickerStyle(.radioGroup)
                     .accentColor(.cocoaToys.accent)
                 }

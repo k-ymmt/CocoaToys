@@ -18,7 +18,9 @@ final class CaffeinatorInteractor {
     private let configManager: ConfigManager
     private let service: CaffeinatorServiceType
 
-    let enabled: RelayPublisher<Bool>
+    @Published var enabled: Bool = false
+    @Published var noSleepType: CaffeinatorConfig.NoSleepType = .display
+
     private var cancellables = Set<AnyCancellable>()
 
     init(dependency: Dependency) {
@@ -29,38 +31,55 @@ final class CaffeinatorInteractor {
 
         let config = configChanged
             .compactMap(\.success)
-            .shareReplay()
-
-        enabled = config
-            .map(\.enabled)
-            .relayPublisher()
 
         config
             .map(\.enabled)
             .removeDuplicates()
-            .sink { enabled in
-                if enabled {
-                    Task.detached {
-                        do {
-                            try await dependency.service.start()
-                        } catch {
-                            print(error)
-                        }
-                    }
-                } else {
-                    dependency.service.stop()
-                }
-            }.store(in: &cancellables)
-    }
+            .assign(to: &$enabled)
+        config
+            .map(\.noSleepType)
+            .removeDuplicates()
+            .assign(to: &$noSleepType)
 
-    func save(config: CaffeinatorConfig) {
-        Task.detached { [weak self] in
-            do {
-                try await self?.configManager.save(config: config)
-                print("Save success!")
-            } catch {
-                print(error)
+        $enabled
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [weak self] isEnabled in
+                guard let self else {
+                    return
+                }
+                print(isEnabled)
+                Task.detached {
+                    do {
+                        try await self.configManager.update { (config: inout CaffeinatorConfig) in
+                            config.enabled = isEnabled
+                        }
+                    } catch {
+                        print(error)
+                    }
+                }
             }
-        }.store(in: &cancellables)
+            .store(in: &cancellables)
+
+        $noSleepType
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [weak self] noSleepType in
+                print(noSleepType)
+                guard let self else {
+                    return
+                }
+
+                Task.detached {
+                    do {
+                        try await self.configManager.update(action: { (config: inout CaffeinatorConfig) in
+                            config.noSleepType = noSleepType
+                        })
+                    } catch {
+                        print(error)
+                    }
+                }
+            }
+            .store(in: &cancellables)
     }
 }

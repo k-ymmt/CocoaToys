@@ -27,18 +27,34 @@ final class CaffeinatorViewModel: ObservableObject {
 
     init(interactor: CaffeinatorInteractor) {
         self.interactor = interactor
-        interactor.enabled
+        interactor.$enabled
             .receive(on: DispatchQueue.main)
             .assign(to: &$caffeinatorEnabled)
+        interactor.$noSleepType
+            .map(CaffeinatorNoSleepType.init)
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$sleepType)
 
-        Publishers.CombineLatest($caffeinatorEnabled, $sleepType)
+        $caffeinatorEnabled
             .dropFirst(2)
-            .removeDuplicates(by: { previous, next in
-                previous.0 == next.0 && previous.1 == next.1
-            })
-            .sink { (enabled, sleepType) in
-                interactor.save(config: .init(enabled: enabled, noSleepType: .init(sleepType)))
-            }.store(in: &cancellables)
+            .removeDuplicates()
+            .assign(to: &interactor.$enabled)
+        $sleepType
+            .dropFirst(2)
+            .removeDuplicates()
+            .map(CaffeinatorConfig.NoSleepType.init)
+            .assign(to: &interactor.$noSleepType)
+    }
+}
+
+private extension CaffeinatorNoSleepType {
+    init(_ type: CaffeinatorConfig.NoSleepType) {
+        switch type {
+        case .display:
+            self = .noDisplaySleep
+        case .idle:
+            self = .noIdleSleep
+        }
     }
 }
 

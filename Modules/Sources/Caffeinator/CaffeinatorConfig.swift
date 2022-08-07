@@ -13,8 +13,8 @@ struct CaffeinatorConfig: ConfigType {
         case display
         case idle
     }
-    let enabled: Bool
-    let noSleepType: NoSleepType
+    var enabled: Bool
+    var noSleepType: NoSleepType
 }
 
 extension CaffeinatorConfig {

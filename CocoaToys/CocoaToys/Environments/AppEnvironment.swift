@@ -9,7 +9,7 @@ import Foundation
 import CocoaToysKit
 import Caffeinator
 
-protocol AppEnvironment: CaffeinatorEnvironment {
+protocol AppEnvironment: CaffeinatorEnvironment, CaffeinatorStatusMenuItemEnvironment {
 }
 
 #if DEBUG
@@ -21,7 +21,7 @@ final class MockEnvironment: AppEnvironment {
         cocoaToysKitMock.configManager
     }
 
-    var caffeinatorService: Caffeinator.CaffeinatorServiceType {
+    var caffeinatorService: CocoaToysKit.CaffeinatorServiceType {
         caffeinatorMock.caffeinatorService
     }
 
