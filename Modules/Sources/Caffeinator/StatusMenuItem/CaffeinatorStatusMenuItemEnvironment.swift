@@ -11,4 +11,5 @@ import CocoaToysKit
 public protocol CaffeinatorStatusMenuItemEnvironment {
     var configManager: ConfigManager { get }
     var caffeinatorService: CaffeinatorServiceType { get }
+    var caffeinatorLogger: Logging { get }
 }

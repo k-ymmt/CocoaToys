@@ -17,5 +17,7 @@ final class CocoaToysEnvironment: AppEnvironment {
 
     lazy var configManager: ConfigManager = CocoaToysConfigManager(fileManager: fileManager) 
 
-    lazy var caffeinatorService: CaffeinatorServiceType = CaffeinatorService(manager: configManager)
+    lazy var caffeinatorService: CaffeinatorServiceType = CaffeinatorService(manager: configManager, fileManager: fileManager, logger: caffeinatorLogger)
+
+    lazy var caffeinatorLogger: Logging = Logger(category: "Caffeinator")
 }

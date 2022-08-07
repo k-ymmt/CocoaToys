@@ -25,5 +25,8 @@ final class MockEnvironment: AppEnvironment {
         caffeinatorMock.caffeinatorService
     }
 
+    var caffeinatorLogger: Logging {
+        caffeinatorMock.caffeinatorLogger
+    }
 }
 #endif

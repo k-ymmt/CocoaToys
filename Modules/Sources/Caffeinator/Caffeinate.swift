@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CocoaToysKit
 import IOKit.pwr_mgt
 
 final class Caffeinate {
@@ -37,11 +38,14 @@ final class Caffeinate {
         }
     }
 
-    let executableURL = URL(fileURLWithPath: "/usr/bin/caffeinate")
     let fileManager: FileManager
-    init(fileManager: FileManager) {
+    let logger: Logging
+
+    init(fileManager: FileManager, logger: Logging) {
         self.fileManager = fileManager
+        self.logger = logger
     }
+
     func executeAssertion(type: AssertionType) throws -> some Cancellable {
         var id = IOPMAssertionID(0)
         let result = IOPMAssertionCreateWithName(
@@ -54,10 +58,10 @@ final class Caffeinate {
             throw Error(message: "Create failed")
         }
 
-        print("Start Power Assertion \(id) by \(type.rawValue)")
-        return AnyCancellable {
+        logger.info("Start Power Assertion \(id) by \(type.rawValue)")
+        return AnyCancellable { [weak self] in
             IOPMAssertionRelease(id)
-            print("End Power Assertion \(id) by \(type.rawValue)")
+            self?.logger.info("End Power Assertion \(id) by \(type.rawValue)")
         }
     }
     func executeAssertionUserIsActive() throws -> some Cancellable {
@@ -81,46 +85,4 @@ final class Caffeinate {
             IOPMAssertionRelease(id)
         }
     }
-    func preventSystemFromIdleSleeping(pid: String? = nil) async throws {
-        try await runCaffeinate(args: ["-i"] + (pid.map { ["-w", $0] } ?? []))
-    }
-
-    func executeAssertion() {
-
-    }
-
-    private func runCaffeinate(args: [String]) async throws {
-//        guard fileManager.fileExists(atPath: executableURL.path) else {
-//            throw Self.Error(message: "caffeinate command not found")
-//        }
-//        let process = Process()
-//        try await withTaskCancellationHandler {
-//            try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Swift.Error>) in
-//                process.executableURL = executableURL
-//                process.arguments = args
-//
-//                let stderr = Pipe()
-//                process.standardError = stderr
-//
-//                print("Running caffeinate")
-//                do {
-//                    try process.run()
-//                    process.waitUntilExit()
-//                    print("Finished caffeinate")
-//                    let handle = stderr.fileHandleForReading
-//                    let data = handle.readDataToEndOfFile()
-//                    print(String(data: data, encoding: .utf8) ?? "nil")
-//                    continuation.resume()
-//                } catch {
-//                    continuation.resume(throwing: error)
-//                }
-//            }
-//        } onCancel: {
-//            process.terminate()
-//            print("onCancel")
-//        }
-    }
-}
-
-extension Process: @unchecked Sendable {
 }

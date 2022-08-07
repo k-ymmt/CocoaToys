@@ -37,8 +37,4 @@ final class MenuItem: NSMenuItem {
         }
         return self
     }
-
-    deinit {
-        print("deinit MenuItem")
-    }
 }

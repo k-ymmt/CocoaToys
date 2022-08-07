@@ -23,19 +23,23 @@ public final class CaffeinatorService: CaffeinatorServiceType {
     }
 
     private let manager: ConfigManager
+    private let logger: Logging
     private var cancellables = Set<AnyCancellable>()
     private var fileChangedCancellable: (any Cancellable)?
     private let properties: Properties
+    private let caffeinate: Caffeinate
 
-    public init(manager: ConfigManager) {
+    public init(manager: ConfigManager, fileManager: FileManager, logger: Logging) {
         self.manager = manager
+        self.logger = logger
+        self.caffeinate = Caffeinate(fileManager: fileManager, logger: logger)
         self.properties = Properties(isStarted: false)
     }
 
     public func start() async {
         return await withTaskCancellationHandler {
             if await properties.isStarted {
-                print("CaffeinatorService already started.")
+                logger.warn("CaffeinatorService already started.")
                 return
             }
 
@@ -46,11 +50,10 @@ public final class CaffeinatorService: CaffeinatorServiceType {
                 self.sinkFileChanged()
                     .store(in: &self.cancellables)
             } catch {
-                print(error)
+                logger.error(error)
             }
         } onCancel: {
             cancellables = Set()
-            print("Task cancelled")
         }
     }
 
@@ -60,7 +63,7 @@ public final class CaffeinatorService: CaffeinatorServiceType {
         }
         await properties.setIsStarted(false)
         cancellables = Set()
-        print("Stop CaffeinatorService")
+        logger.info("Stop CaffeinatorService")
     }
 }
 
@@ -82,15 +85,14 @@ private extension CaffeinatorService {
                 switch result {
                 case .success(let config):
                     if config.enabled {
-                        let command = Caffeinate(fileManager: .default)
                         do {
-                            self.fileChangedCancellable = try command.executeAssertion(type: .init(config.noSleepType))
+                            self.fileChangedCancellable = try self.caffeinate.executeAssertion(type: .init(config.noSleepType))
                         } catch {
-                            print(error)
+                            self.logger.error(error)
                         }
                     }
                 case .failure(let error):
-                    print(error)
+                    self.logger.error(error)
                 }
             }
     }

@@ -17,7 +17,8 @@ public struct CaffeinatorView: View {
             interactor: .init(
                 dependency: .init(
                     configManager: environment.configManager,
-                    service: environment.caffeinatorService
+                    service: environment.caffeinatorService,
+                    logger: environment.caffeinatorLogger
                 )
             )
         )

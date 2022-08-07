@@ -14,9 +14,11 @@ final class CaffeinatorStatusMenuItemInteractor {
 
     private var cancellables = Set<AnyCancellable>()
     private let configManager: ConfigManager
+    private let logger: Logging
 
     init(environment: CaffeinatorStatusMenuItemEnvironment) {
         self.configManager = environment.configManager
+        self.logger = environment.caffeinatorLogger
         let config = environment
             .configManager
             .fileChanged(CaffeinatorConfig.self)
@@ -52,7 +54,7 @@ final class CaffeinatorStatusMenuItemInteractor {
                     config.enabled = isEnabled
                 }
             } catch {
-                print(error)
+                self.logger.error(error)
             }
         }
     }
