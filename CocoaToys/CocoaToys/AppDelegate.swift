@@ -23,8 +23,4 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusMenuItem.behavior = .removalAllowed
         self.statusMenuItem = statusMenuItem
     }
-
-    func applicationWillTerminate(_ notification: Notification) {
-        print("Terminated.")
-    }
 }

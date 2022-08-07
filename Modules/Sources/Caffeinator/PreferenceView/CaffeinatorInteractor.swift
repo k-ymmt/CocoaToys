@@ -13,10 +13,12 @@ final class CaffeinatorInteractor {
     struct Dependency {
         let configManager: ConfigManager
         let service: CaffeinatorServiceType
+        let logger: Logging
     }
 
     private let configManager: ConfigManager
     private let service: CaffeinatorServiceType
+    private let logger: Logging
 
     @Published var enabled: Bool = false
     @Published var noSleepType: CaffeinatorConfig.NoSleepType = .display
@@ -26,6 +28,7 @@ final class CaffeinatorInteractor {
     init(dependency: Dependency) {
         self.configManager = dependency.configManager
         self.service = dependency.service
+        self.logger = dependency.logger
 
         let configChanged = configManager.fileChanged(CaffeinatorConfig.self)
 
@@ -48,14 +51,13 @@ final class CaffeinatorInteractor {
                 guard let self else {
                     return
                 }
-                print(isEnabled)
                 Task.detached {
                     do {
                         try await self.configManager.update { (config: inout CaffeinatorConfig) in
                             config.enabled = isEnabled
                         }
                     } catch {
-                        print(error)
+                        self.logger.error(error)
                     }
                 }
             }
@@ -65,7 +67,6 @@ final class CaffeinatorInteractor {
             .dropFirst()
             .removeDuplicates()
             .sink { [weak self] noSleepType in
-                print(noSleepType)
                 guard let self else {
                     return
                 }
@@ -76,7 +77,7 @@ final class CaffeinatorInteractor {
                             config.noSleepType = noSleepType
                         })
                     } catch {
-                        print(error)
+                        self.logger.error(error)
                     }
                 }
             }
